@@ -36,3 +36,17 @@ select * from resume_view;
  DELIMITER ;
  # Call the Stored Procedure
  CALL school_getinfo (4);
+ 
+ DROP PROCEDURE IF EXISTS resume_getinfo;
+ DELIMITER //
+ CREATE PROCEDURE resume_getinfo (_resume_id int)
+ BEGIN
+ SELECT * FROM resume r 
+ WHERE resume_id = _resume_id;
+ SELECT s.*, rs.resume_id FROM skill s
+ LEFT JOIN resume_skill rs on rs.skill_id = s.skill_id AND resume_id = _resume_id;
+ END //
+ DELIMITER ;
+ # Call the Stored Procedure
+ CALL resume_getinfo (2);
+ 
